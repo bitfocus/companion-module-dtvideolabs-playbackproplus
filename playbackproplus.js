@@ -73,50 +73,133 @@ instance.prototype.actions = function(system) {
 
 	self.system.emit('instance_actions', self.id, {
 		'take':     { label: 'Take' },
+		'play':     { label: 'Play from current loacation'},
 		'pause':    { label: 'Pause Resume' },
 		'kill':     { label: 'Kill' },
 		'freeze':   { label: 'Freeze temp' },
 		'loop':     { label: 'Loop temp' },
+		'link':     { label: 'Link temp'},
 		'previous': { label: 'Previous Clip' },
 		'next':     { label: 'Next Clip' },
 		'10':       { label: 'Goto 10' },
 		'20':       { label: 'Goto 20' },
-		'30':       { label: 'Goto 30' }
+		'30':       { label: 'Goto 30' },
+		'ff':       { label: 'Fast forward program'},
+		'fr':       { label: 'Fast Reverse program'},
+		'goxxx':		{
+			label: 'Load clip (id) into Preview',
+			options: [
+				{
+					type: 'textinput',
+					label: 'clip ID',
+					id: 'clip',
+					regex: self.REGEX_NUMBER
+				}
+			]
+		},
+		'gtxxx':	{
+			label: 'Load clip (id) and Take',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Clip ID',
+					id: 'clip',
+					regex: self.REGEX_NUMBER
+				}
+			]
+		}
 	});
 };
 
 instance.prototype.action = function(action) {
 	var self = this;
-	var id = action.action;
+	var cmd
+	var opt = action.options
 
-	// playbackproplus port 7000
-	var playbackproplus = {
-		'take':       'TA',
-		'pause':      'OP',
-		'kill':       'KL',
-		'freeze':     'FT',
-		'loop':       'LT',
-		'previous':   'PR',
-		'next':       'NX',
-		'10':         '10',
-		'20':         '20',
-		'30':         '30'
-	};
+	switch(action.action){
 
-	if (playbackproplus[id] !== undefined) {
+		case 'take':
+			cmd = 'TA';
+			break;
 
-		if (self.udp !== undefined) {
-			debug('sending',playbackproplus[id],"to",self.udp.host);
+		case 'play':
+			cmd = 'PL'
+			break;
 
-			self.udp.send(playbackproplus[id]);
+		case 'pause':
+			cmd = 'OP';
+			break;
+
+		case 'kill':
+			cmd = 'KL';
+			break;
+
+		case 'freeze':
+			cmd = 'FT';
+			break;
+
+		case 'loop':
+			cmd = 'LT';
+			break;
+
+		case 'link':
+			cmd = 'IT';
+			break;
+
+		case 'previous':
+			cmd = 'PR';
+			break;
+
+		case 'next':
+			cmd = 'NX';
+			break;
+
+		case '10':
+			cmd = '10';
+			break;
+
+		case '20':
+			cmd = '20';
+			break;
+
+		case '30':
+			cmd = '30';
+			break;
+
+		case 'goxxx':
+			cmd = 'GO'+ opt.clip;
+			break;
+
+		case 'gtxxx':
+			cmd = 'GT'+ opt.clip;
+			break;
+
+		case 'ff':
+			cmd = 'OF';
+			break;
+
+		case 'fr':
+			cmd = 'OR';
+			break;
+
+
+	}
+
+	if (cmd !== undefined ) {
+
+		if (self.udp !== undefined ) {
+			debug('sending',cmd,"to",self.udp.host);
+
+			self.udp.send(cmd);
 		}
 	}
+
 };
 
 instance.module_info = {
 	label: 'PlaybackPro Plus UDP',
 	id: 'playbackproplus',
-	version: '0.0.1'
+	version: '0.0.2'
 };
 
 instance_skel.extendedBy(instance);
