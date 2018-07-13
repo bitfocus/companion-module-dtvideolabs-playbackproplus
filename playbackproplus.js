@@ -73,7 +73,7 @@ instance.prototype.actions = function(system) {
 
 	self.system.emit('instance_actions', self.id, {
 		'take':     { label: 'Take' },
-		'play':     { label: 'Play from current loacation'},
+		'play':     { label: 'Play from current location'},
 		'pause':    { label: 'Pause Resume' },
 		'kill':     { label: 'Kill' },
 		'freeze':   { label: 'Freeze temp' },
