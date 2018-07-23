@@ -20,6 +20,15 @@ function instance(system, id, config) {
 instance.prototype.updateConfig = function(config) {
 var self = this;
 
+if (self.udp !== undefined) {
+	self.udp.destroy();
+}
+
+if (self.socket !== undefined) {
+	self.socket.destroy();
+	delete self.socket;
+}
+
 self.config = config;
 	if (self.config.prot == 'tcp') {
 		self.init_tcp();
@@ -47,6 +56,10 @@ log = self.log;
 instance.prototype.init_udp = function() {
 	var self = this;
 
+	if (self.udp !== undefined) {
+		self.udp.destroy();
+	}
+
 	self.status(self.STATUS_UNKNOWN);
 
 	if (self.config.host !== undefined) {
@@ -69,9 +82,7 @@ if (self.socket !== undefined) {
 	self.socket.destroy();
 	delete self.socket;
 }
-if (self.udp !== undefined) {
-	self.udp.destroy();
-}
+
 
 if (self.config.host) {
 	self.socket = new tcp(self.config.host, 4647);
