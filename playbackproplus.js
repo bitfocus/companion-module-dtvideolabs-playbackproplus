@@ -18,18 +18,19 @@ function instance(system, id, config) {
 }
 
 instance.prototype.updateConfig = function(config) {
-var self = this;
+	var self = this;
 
-if (self.udp !== undefined) {
-	self.udp.destroy();
-}
+	if (self.udp !== undefined) {
+		self.udp.destroy();
+		delete self.udp;
+	}
 
-if (self.socket !== undefined) {
-	self.socket.destroy();
-	delete self.socket;
-}
+	if (self.socket !== undefined) {
+		self.socket.destroy();
+		delete self.socket;
+	}
 
-self.config = config;
+	self.config = config;
 	if (self.config.prot == 'tcp') {
 		self.init_tcp();
 	};
@@ -39,12 +40,12 @@ self.config = config;
 };
 
 instance.prototype.init = function() {
-var self = this;
+	var self = this;
 
-debug = self.debug;
-log = self.log;
+	debug = self.debug;
+	log = self.log;
+
 	if (self.config.prot == 'tcp') {
-		self.status(1,'Connecting'); // status ok!
 		self.init_tcp();
 	};
 
@@ -58,90 +59,101 @@ instance.prototype.init_udp = function() {
 
 	if (self.udp !== undefined) {
 		self.udp.destroy();
+		delete self.udp;
 	}
 
-	self.status(self.STATUS_UNKNOWN);
+	self.status(self.STATE_WARNING, 'Connecting');
 
 	if (self.config.host !== undefined) {
 		self.udp = new udp(self.config.host, 7000);
+
+		self.udp.on('error', function (err) {
+			debug("Network error", err);
+			self.status(self.STATE_ERROR, err);
+			self.log('error',"Network error: " + err.message);
+		});
+
+		// If we get data, thing should be good
+		self.udp.on('data', function () {
+			self.status(self.STATE_OK);
+		});
 
 		self.udp.on('status_change', function (status, message) {
 			self.status(status, message);
 		});
 	}
+};
+
+instance.prototype.init_tcp = function() {
+	var self = this;
+
 	if (self.socket !== undefined) {
 		self.socket.destroy();
 		delete self.socket;
 	}
-};
 
-instance.prototype.init_tcp = function() {
-var self = this;
+	self.status(self.STATE_WARNING, 'Connecting');
 
-if (self.socket !== undefined) {
-	self.socket.destroy();
-	delete self.socket;
-}
+	if (self.config.host) {
+		self.socket = new tcp(self.config.host, 4647);
 
+		self.socket.on('status_change', function (status, message) {
+			self.status(status, message);
+		});
 
-if (self.config.host) {
-	self.socket = new tcp(self.config.host, 4647);
+		self.socket.on('error', function (err) {
+			debug("Network error", err);
+			self.status(self.STATE_ERROR, err);
+			self.log('error',"Network error: " + err.message);
+		});
 
-	self.socket.on('status_change', function (status, message) {
-		self.status(status, message);
-	});
+		self.socket.on('connect', function () {
+			self.status(self.STATE_OK);
+			debug("Connected");
+		})
 
-	self.socket.on('error', function (err) {
-		debug("Network error", err);
-		self.status(self.STATE_ERROR, err);
-		self.log('error',"Network error: " + err.message);
-	});
-
-	self.socket.on('connect', function () {
-		self.status(self.STATE_OK);
-		debug("Connected");
-	})
-
-	self.socket.on('data', function (data) {});
-}
+		self.socket.on('data', function (data) {});
+	}
 };
 
 
 // Return config fields for web config
 instance.prototype.config_fields = function () {
-var self = this;
-return [
-	{
-		type: 'textinput',
-		id: 'host',
-		label: 'Target IP',
-		width: 6,
-		regex: self.REGEX_IP
-	},
-	{
-		type: 'dropdown',
-		id: 'prot',
-		label: 'Connect with TCP / UDP',
-		choices:  [
-			{ id: 'udp', label: 'UDP' },
-			{ id: 'tcp', label: 'TCP' }
-		]
-	}
-]
+	var self = this;
+
+	return [
+		{
+			type: 'textinput',
+			id: 'host',
+			label: 'Target IP',
+			width: 6,
+			regex: self.REGEX_IP
+		},
+		{
+			type: 'dropdown',
+			id: 'prot',
+			label: 'Connect with TCP / UDP',
+			default: 'tcp',
+			choices:  [
+				{ id: 'udp', label: 'UDP' },
+				{ id: 'tcp', label: 'TCP' }
+			]
+		}
+	]
 };
 
 // When module gets deleted
 instance.prototype.destroy = function() {
-var self = this;
+	var self = this;
 
-if (self.socket !== undefined) {
-	self.socket.destroy();
-}
-if (self.udp !== undefined) {
-	self.udp.destroy();
-}
+	if (self.socket !== undefined) {
+		self.socket.destroy();
+	}
+	if (self.udp !== undefined) {
+		self.udp.destroy();
+	}
 
-debug("destroy", self.id);;
+	debug("destroy", self.id);;
 };
 
 instance.prototype.actions = function(system) {
