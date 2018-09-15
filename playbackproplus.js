@@ -173,7 +173,16 @@ instance.prototype.actions = function(system) {
 		'20':       { label: 'Goto 20' },
 		'30':       { label: 'Goto 30' },
 		'ff':       { label: 'Fast forward program'},
-		'fr':       { label: 'Fast Reverse program'},
+		'es':       { label: 'Mark In PRW'},
+		'ee':       { label: 'Mark Out PRW'},
+		'ep':       { label: 'Play/Pause PRW'},
+		'ef':       { label: 'Fast Forward PRW'},
+		'er':       { label: 'Fast Rewind PRW'},
+		'e+':       { label: 'Step Forward PRW'},
+		'e-':       { label: 'Step Backward PRW'},
+		'oi':       { label: 'Goto In Program'},
+		'oo':       { label: 'Goto Out Program'},
+
 		'goxxx':		{
 			label: 'Load clip (id) into Preview',
 			options: [
@@ -268,6 +277,42 @@ instance.prototype.action = function(action) {
 
 		case 'fr':
 			cmd = 'OR';
+			break;
+
+		case 'es':
+			cmd = 'ES';
+			break;
+
+		case 'ee':
+			cmd = 'EE';
+			break;
+
+		case 'ep':
+			cmd = 'EP';
+			break;
+
+		case 'ef':
+			cmd = 'EF';
+			break;
+
+		case 'er':
+			cmd = 'ER';
+			break;
+
+		case 'e+':
+			cmd = 'E+';
+			break;
+
+		case 'e-':
+			cmd = 'E-';
+			break;
+
+		case 'oi':
+			cmd = 'OI';
+			break;
+
+		case 'oo':
+			cmd = 'OO';
 			break;
 
 
