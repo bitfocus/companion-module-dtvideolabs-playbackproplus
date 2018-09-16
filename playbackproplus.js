@@ -13,12 +13,14 @@ function instance(system, id, config) {
 	instance_skel.apply(this, arguments);
 
 	self.actions(); // export actions
+	self.init_presets();
 
 	return self;
 }
 
 instance.prototype.updateConfig = function(config) {
 	var self = this;
+	self.init_presets();s
 
 	if (self.udp !== undefined) {
 		self.udp.destroy();
@@ -44,6 +46,7 @@ instance.prototype.init = function() {
 
 	debug = self.debug;
 	log = self.log;
+	self.init_presets();
 
 	if (self.config.prot == 'tcp') {
 		self.init_tcp();
@@ -156,23 +159,406 @@ instance.prototype.destroy = function() {
 	debug("destroy", self.id);;
 };
 
+instance.prototype.init_presets = function () {
+	var self = this;
+	var presets = [];
+
+		presets.push({
+			category: 'Program',
+			label: 'Take',
+			bank: {
+				style: 'text',
+				text: 'Take',
+				size: '24',
+				color: '16777215',
+				bgcolor: self.rgb(0,255,0)
+			},
+			actions: [
+				{
+					action: 'take',
+				}
+			]
+		});
+		presets.push({
+			category: 'Program',
+			label: 'Kill',
+			bank: {
+				style: 'text',
+				text: 'Kill',
+				size: '24',
+				color: '16777215',
+				bgcolor: self.rgb(255,0,0)
+			},
+			actions: [
+				{
+					action: 'kill',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Pause',
+			bank: {
+				style: 'text',
+				text: 'Pause',
+				size: '24',
+				color: self.rgb(0,0,0),
+				bgcolor: self.rgb(255,255,0)
+			},
+			actions: [
+				{
+					action: 'pause',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Frezze',
+			bank: {
+				style: 'text',
+				text: 'Freeze',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'freeze',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Loop',
+			bank: {
+				style: 'text',
+				text: 'Loop',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'loop',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Link',
+			bank: {
+				style: 'text',
+				text: 'Link',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'link',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Previous',
+			bank: {
+				style: 'text',
+				text: 'Prev\\nClip',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'previous',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Next',
+			bank: {
+				style: 'text',
+				text: 'Next\\nClip',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'Next',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Goto 10',
+			bank: {
+				style: 'text',
+				text: 'Goto\\n10 Sec',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: '10',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Goto 20',
+			bank: {
+				style: 'text',
+				text: 'Goto\\n20 Sec',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: '20',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Goto 30',
+			bank: {
+				style: 'text',
+				text: 'Goto\\n30 Sec',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: '30',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Fast Forward',
+			bank: {
+				style: 'text',
+				text: 'FF\\nPGM',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'ff',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Rewind',
+			bank: {
+				style: 'text',
+				text: 'Rew\\nPGM',
+				size: '18',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'fr',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Goto IN',
+			bank: {
+				style: 'text',
+				text: 'Goto\\nIN\\nPGM',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'oi',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Program',
+			label: 'Goto Out',
+			bank: {
+				style: 'text',
+				text: 'Goto\\nOut\\nPGM',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'oo',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Mark In',
+			bank: {
+				style: 'text',
+				text: 'Mark\\nIn\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'es',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Mark Out',
+			bank: {
+				style: 'text',
+				text: 'Mark\\nOut\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'ee',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Play/Pause',
+			bank: {
+				style: 'text',
+				text: 'Play\\nPause\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'ep',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Fast Forward',
+			bank: {
+				style: 'text',
+				text: 'FF\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'ef',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Rewind',
+			bank: {
+				style: 'text',
+				text: 'Rev\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'er',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Step Back PRW',
+			bank: {
+				style: 'text',
+				text: 'Step\\nBack\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'e-',
+				}
+			]
+		});
+
+		presets.push({
+			category: 'Preview',
+			label: 'Step FWD PRW',
+			bank: {
+				style: 'text',
+				text: 'Step\\nFWD\\nPRW',
+				size: '14',
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [
+				{
+					action: 'e+',
+				}
+			]
+		});
+
+	self.setPresetDefinitions(presets);
+}
+
 instance.prototype.actions = function(system) {
 	var self = this;
 
 	self.system.emit('instance_actions', self.id, {
 		'take':     { label: 'Take' },
-		'play':     { label: 'Play from current location'},
+		'play':     { label: 'Play from current location' },
 		'pause':    { label: 'Pause Resume' },
 		'kill':     { label: 'Kill' },
 		'freeze':   { label: 'Freeze temp' },
 		'loop':     { label: 'Loop temp' },
-		'link':     { label: 'Link temp'},
+		'link':     { label: 'Link temp' },
 		'previous': { label: 'Previous Clip' },
 		'next':     { label: 'Next Clip' },
 		'10':       { label: 'Goto 10' },
 		'20':       { label: 'Goto 20' },
 		'30':       { label: 'Goto 30' },
-		'ff':       { label: 'Fast forward program'},
+		'ff':       { label: 'Fast Forward Program'},
+		'fr':       { label: 'Fast Rewind Program'},
+		'oi':       { label: 'Goto In Program'},
+		'oo':       { label: 'Goto Out Program'},
 		'es':       { label: 'Mark In PRW'},
 		'ee':       { label: 'Mark Out PRW'},
 		'ep':       { label: 'Play/Pause PRW'},
@@ -180,8 +566,7 @@ instance.prototype.actions = function(system) {
 		'er':       { label: 'Fast Rewind PRW'},
 		'e+':       { label: 'Step Forward PRW'},
 		'e-':       { label: 'Step Backward PRW'},
-		'oi':       { label: 'Goto In Program'},
-		'oo':       { label: 'Goto Out Program'},
+
 
 		'goxxx':		{
 			label: 'Load clip (id) into Preview',
@@ -348,7 +733,7 @@ instance.prototype.action = function(action) {
 instance.module_info = {
 	label: 'PlayBackPro Plus',
 	id: 'playbackproplus',
-	version: '0.0.5'
+	version: '1.2.0'
 };
 
 instance_skel.extendedBy(instance);
