@@ -20,7 +20,7 @@ function instance(system, id, config) {
 
 instance.prototype.updateConfig = function(config) {
 	var self = this;
-	self.init_presets();s
+	self.init_presets();
 
 	if (self.udp !== undefined) {
 		self.udp.destroy();
@@ -215,7 +215,7 @@ instance.prototype.init_presets = function () {
 
 		presets.push({
 			category: 'Program',
-			label: 'Frezze',
+			label: 'Freeze',
 			bank: {
 				style: 'text',
 				text: 'Freeze',
