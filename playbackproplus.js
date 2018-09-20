@@ -293,7 +293,7 @@ instance.prototype.init_presets = function () {
 			},
 			actions: [
 				{
-					action: 'Next',
+					action: 'next',
 				}
 			]
 		});
