@@ -1,16 +1,19 @@
 {
-  "name": "playbackproplus",
-  "version": "1.0.0",
+	"name": "playbackproplus",
+	"version": "1.0.1",
 	"api_version": "1.0.0",
-	"keywords": [ "Video", "Software" ],
+	"keywords": [
+		"Video",
+		"Software"
+	],
 	"manufacturer": "DT Videolabs",
 	"product": "PlaybackPro Plus",
 	"shortname": "pbp",
-  "description": "PlaybackPro Plus plugin for Companion",
-  "main": "playbackproplus.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Per Røine <per.roine@gmail.com>",
-  "license": "MIT"
+	"description": "PlaybackPro Plus plugin for Companion",
+	"main": "playbackproplus.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Per Røine <per.roine@gmail.com>",
+	"license": "MIT"
 }
