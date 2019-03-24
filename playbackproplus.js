@@ -649,11 +649,25 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'goxxx':
-			cmd = 'GO'+ parseInt(opt.clip);
+			clipId = parseInt(opt.clip, 10);
+			if (clipId < 10) {
+				clipId = '00'+clipId;
+			}
+			else if (clipId < 100) {
+				clipId = '0'+clipId;
+			}
+			cmd = 'GO'+ clipId;
 			break;
 
 		case 'gtxxx':
-			cmd = 'GT'+ parseInt(opt.clip);
+			clipId = parseInt(opt.clip, 10);
+			if (clipId < 10) {
+				clipId = '00'+clipId;
+			}
+			else if (clipId < 100) {
+				clipId = '0'+clipId;
+			}
+			cmd = 'GT'+ parseInt(opt.clip, 10);
 			break;
 
 		case 'ff':
