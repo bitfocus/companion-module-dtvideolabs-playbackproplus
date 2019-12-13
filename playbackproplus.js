@@ -161,59 +161,62 @@ instance.prototype.destroy = function() {
 
 instance.prototype.init_presets = function () {
 	var self = this;
-	var presets = [];
-
-		presets.push({
+	var presets = [
+		{
 			category: 'Program',
 			label: 'Take',
 			bank: {
-				style: 'text',
-				text: 'Take',
-				size: '24',
+				style: 'png',
+				text: '',
+				png64: self.ICON_PLAY_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,255,0)
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
 					action: 'take',
 				}
 			]
-		});
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Kill',
 			bank: {
-				style: 'text',
-				text: 'Kill',
-				size: '24',
+				style: 'png',
+				text: '',
+				png64: self.ICON_STOP_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(255,0,0)
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
 					action: 'kill',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Pause',
 			bank: {
-				style: 'text',
-				text: 'Pause',
-				size: '24',
-				color: self.rgb(0,0,0),
-				bgcolor: self.rgb(255,255,0)
+				style: 'png',
+				text: '',
+				png64: self.ICON_PAUSE_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
 					action: 'pause',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Freeze',
 			bank: {
@@ -228,9 +231,8 @@ instance.prototype.init_presets = function () {
 					action: 'freeze',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Loop',
 			bank: {
@@ -245,9 +247,8 @@ instance.prototype.init_presets = function () {
 					action: 'loop',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Link',
 			bank: {
@@ -262,43 +263,44 @@ instance.prototype.init_presets = function () {
 					action: 'link',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Previous',
 			bank: {
-				style: 'text',
-				text: 'Prev\\nClip',
+				style: 'png',
+				text: '',
+				png64: self.ICON_REW_INACTIVE,
+				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: 0
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
 					action: 'previous',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Next',
 			bank: {
-				style: 'text',
-				text: 'Next\\nClip',
+				style: 'png',
+				text: '',
+				png64: self.ICON_FWD_INACTIVE,
+				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: 0
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
 					action: 'next',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Goto 10',
 			bank: {
@@ -313,9 +315,8 @@ instance.prototype.init_presets = function () {
 					action: '10',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Goto 20',
 			bank: {
@@ -330,9 +331,8 @@ instance.prototype.init_presets = function () {
 					action: '20',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Goto 30',
 			bank: {
@@ -347,9 +347,8 @@ instance.prototype.init_presets = function () {
 					action: '30',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Fast Forward',
 			bank: {
@@ -364,9 +363,8 @@ instance.prototype.init_presets = function () {
 					action: 'ff',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Rewind',
 			bank: {
@@ -381,9 +379,8 @@ instance.prototype.init_presets = function () {
 					action: 'fr',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Goto IN',
 			bank: {
@@ -398,9 +395,8 @@ instance.prototype.init_presets = function () {
 					action: 'oi',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Program',
 			label: 'Goto Out',
 			bank: {
@@ -415,9 +411,8 @@ instance.prototype.init_presets = function () {
 					action: 'oo',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Mark In',
 			bank: {
@@ -432,9 +427,8 @@ instance.prototype.init_presets = function () {
 					action: 'es',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Mark Out',
 			bank: {
@@ -449,9 +443,8 @@ instance.prototype.init_presets = function () {
 					action: 'ee',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Play/Pause',
 			bank: {
@@ -466,9 +459,8 @@ instance.prototype.init_presets = function () {
 					action: 'ep',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Fast Forward',
 			bank: {
@@ -483,9 +475,8 @@ instance.prototype.init_presets = function () {
 					action: 'ef',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Rewind',
 			bank: {
@@ -500,9 +491,8 @@ instance.prototype.init_presets = function () {
 					action: 'er',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Step Back PRW',
 			bank: {
@@ -517,9 +507,8 @@ instance.prototype.init_presets = function () {
 					action: 'e-',
 				}
 			]
-		});
-
-		presets.push({
+		},
+		{
 			category: 'Preview',
 			label: 'Step FWD PRW',
 			bank: {
@@ -534,8 +523,8 @@ instance.prototype.init_presets = function () {
 					action: 'e+',
 				}
 			]
-		});
-
+		}
+	];
 	self.setPresetDefinitions(presets);
 }
 
