@@ -1,2 +1,2 @@
-# companion-module-playbackproplus
+# companion-module-dtvideolabs-playbackproplus
 See HELP.md and LICENSE
