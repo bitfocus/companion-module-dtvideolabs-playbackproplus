@@ -1,30 +1,25 @@
 {
 	"name": "dtvideolabs-playbackproplus",
-	"legacy": [
-		"playbackproplus"
-	],
 	"version": "1.0.4",
-	"api_version": "1.0.0",
-	"keywords": [
-		"Video",
-		"Software"
-	],
-	"manufacturer": "DT Videolabs",
-	"product": "PlaybackPro Plus",
-	"shortname": "pbp",
-	"description": "PlaybackPro Plus plugin for Companion",
-	"main": "playbackproplus.js",
+	"main": "main.js",
+	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"format": "prettier -w .",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
+		"lint": "yarn lint:raw ."
 	},
-	"author": "Per Røine <per.roine@gmail.com>",
 	"license": "MIT",
-	"homepage": "https://github.com/bitfocus/companion-module-dtvideolabs-playbackproplus#readme",
-	"bugs": {
-		"url": "https://github.com/bitfocus/companion-module-dtvideolabs-playbackproplus/issues"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bitfocus/companion-module-dtvideolabs-playbackproplus.git"
-	}
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.4.0",
+		"typescript": "^5.0.3"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^1.2.0"
+	},
+	"prettier": "@companion-module/tools/.prettierrc.json"
 }
