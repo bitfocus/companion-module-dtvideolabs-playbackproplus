@@ -1,6 +1,6 @@
-import { combineRgb } from '@companion-module/base'
-const BLACK = combineRgb(0, 0, 0)
-const WHITE = combineRgb(255, 255, 255)
+// import { combineRgb } from '@companion-module/base'
+const BLACK = 0
+const WHITE = 16777215
 
 export function getPresetDefinitions() {
 	return {
@@ -30,7 +30,7 @@ export function getPresetDefinitions() {
 		'program-kill': {
 			category: 'Program',
 			type: 'button',
-			name: 'Kill',
+			name: 'End Playback (kill)',
 			style: {
 				text: '',
 				png64: ICON_STOP_INACTIVE,
@@ -53,7 +53,7 @@ export function getPresetDefinitions() {
 		'program-pause': {
 			category: 'Program',
 			type: 'button',
-			name: 'Pause',
+			name: 'Pause/Play (Program)',
 			style: {
 				text: '',
 				png64: ICON_PAUSE_INACTIVE,
@@ -76,13 +76,13 @@ export function getPresetDefinitions() {
 		'program-link': {
 			category: 'Program',
 			type: 'button',
-			name: 'Link',
+			name: 'Link Temp (Toggle)',
 			style: {
 				style: 'text',
 				text: 'Link',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -98,13 +98,13 @@ export function getPresetDefinitions() {
 		'program-freeze': {
 			category: 'Program',
 			type: 'button',
-			name: 'Freeze',
+			name: 'Freeze Temp (Toggle)',
 			style: {
 				style: 'text',
 				text: 'Freeze',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -120,13 +120,13 @@ export function getPresetDefinitions() {
 		'program-loop': {
 			category: 'Program',
 			type: 'button',
-			name: 'Loop',
+			name: 'Loop Temp (Toggle)',
 			style: {
 				style: 'text',
 				text: 'Loop',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -139,62 +139,16 @@ export function getPresetDefinitions() {
 			],
 			feedbacks: [],
 		},
-		'program-prev': {
-			category: 'Program',
-			type: 'button',
-			name: 'Previous',
-			style: {
-				text: '',
-				png64: ICON_PREV,
-				pngalignment: 'center:center',
-				size: '18',
-				color: WHITE,
-				bgcolor: BLACK,
-			},
-			steps: [
-				{
-					down: [
-						{
-							actionId: 'previous',
-						},
-					],
-				},
-			],
-			feedbacks: [],
-		},
-		'program-next': {
-			category: 'Program',
-			type: 'button',
-			name: 'Next',
-			style: {
-				text: '',
-				png64: ICON_NEXT,
-				pngalignment: 'center:center',
-				size: '18',
-				color: WHITE,
-				bgcolor: BLACK,
-			},
-			steps: [
-				{
-					down: [
-						{
-							actionId: 'next',
-						},
-					],
-				},
-			],
-			feedbacks: [],
-		},
 		'program-last30': {
 			category: 'Program',
 			type: 'button',
-			name: 'Goto 30',
+			name: 'Goto last 30 seconds (Program)',
 			style: {
 				style: 'text',
-				text: 'Goto\\n30 Sec',
+				text: 'Last\\n30 Sec',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -210,13 +164,13 @@ export function getPresetDefinitions() {
 		'program-last20': {
 			category: 'Program',
 			type: 'button',
-			name: 'Goto 20',
+			name: 'Goto last 20 seconds (Program)',
 			style: {
 				style: 'text',
-				text: 'Goto\\n20 Sec',
+				text: 'Last\\n20 Sec',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -232,13 +186,13 @@ export function getPresetDefinitions() {
 		'program-last10': {
 			category: 'Program',
 			type: 'button',
-			name: 'Goto 10',
+			name: 'Goto last 10 seconds (Program)',
 			style: {
 				style: 'text',
-				text: 'Goto\\n10 Sec',
+				text: 'Last\\n10 Sec',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -251,16 +205,38 @@ export function getPresetDefinitions() {
 			],
 			feedbacks: [],
 		},
+		'program-fast-reverse': {
+			category: 'Program',
+			type: 'button',
+			name: 'Fast Reverse (Program)',
+			style: {
+				style: 'text',
+				text: 'Rew\\nPGM',
+				size: '18',
+				color: WHITE,
+				bgcolor: BLACK,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'pgmFR',
+						},
+					],
+				},
+			],
+			feedbacks: [],
+		},
 		'program-fast-fwd': {
 			category: 'Program',
 			type: 'button',
-			name: 'Fast Forward',
+			name: 'Fast Forward (Program)',
 			style: {
 				style: 'text',
 				text: 'FF\\nPGM',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -273,22 +249,44 @@ export function getPresetDefinitions() {
 			],
 			feedbacks: [],
 		},
-		'program-rewind': {
+		'program-step-back': {
 			category: 'Program',
 			type: 'button',
-			name: 'Rewind',
+			name: 'Step Backward (Program)',
 			style: {
 				style: 'text',
-				text: 'Rew\\nPGM',
+				text: '<Step\\nPGM',
 				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
 					down: [
 						{
-							actionId: 'pgmFR',
+							actionId: 'pgmStepBack',
+						},
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'program-step-fwd': {
+			category: 'Program',
+			type: 'button',
+			name: 'Step Forward (Program)',
+			style: {
+				style: 'text',
+				text: 'Step>\\nPGM',
+				size: '18',
+				color: WHITE,
+				bgcolor: BLACK,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'pgmStepFwd',
 						},
 					],
 				},
@@ -305,7 +303,7 @@ export function getPresetDefinitions() {
 		// 		text: 'Goto\\nIN\\nPGM',
 		// 		size: '14',
 		// 		color: WHITE,
-		// 		WHbgcolor: BLACK,
+		// 		bgcolor: BLACK,
 		// 	},
 		// 	steps: [
 		// 		{
@@ -327,7 +325,7 @@ export function getPresetDefinitions() {
 		// 		text: 'Goto\\nOut\\nPGM',
 		// 		size: '14',
 		// 		color: WHITE,
-		// 		WHbgcolor: BLACK,
+		// 		bgcolor: BLACK,
 		// 	},
 		// 	steps: [
 		// 		{
@@ -340,44 +338,46 @@ export function getPresetDefinitions() {
 		// 	],
 		// 	feedbacks: [],
 		// },
-		'preview-mark-in': {
+		'preview-prev': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Mark In',
+			name: 'Previous (Preview)',
 			style: {
-				style: 'text',
-				text: 'Mark\\nIn\\nPVW',
-				size: '14',
+				text: '',
+				png64: ICON_PREV,
+				pngalignment: 'center:center',
+				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
 					down: [
 						{
-							actionId: 'markIn',
+							actionId: 'previous',
 						},
 					],
 				},
 			],
 			feedbacks: [],
 		},
-		'preview-mark-out': {
+		'preview-next': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Mark Out',
+			name: 'Next (Preview)',
 			style: {
-				style: 'text',
-				text: 'Mark\\nOut\\nPVW',
-				size: '14',
+				text: '',
+				png64: ICON_NEXT,
+				pngalignment: 'center:center',
+				size: '18',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
 					down: [
 						{
-							actionId: 'markOut',
+							actionId: 'next',
 						},
 					],
 				},
@@ -387,13 +387,13 @@ export function getPresetDefinitions() {
 		'preview-pause': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Play/Pause',
+			name: 'Play/Pause (Preview)',
 			style: {
 				style: 'text',
 				text: 'Play\\nPause\\nPVW',
 				size: '14',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -409,13 +409,13 @@ export function getPresetDefinitions() {
 		'preview-rewind': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Rewind',
+			name: 'Fast Reverse (Preview)',
 			style: {
 				style: 'text',
 				text: 'Rev\\nPVW',
 				size: '14',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -431,13 +431,13 @@ export function getPresetDefinitions() {
 		'preview-fast-fwd': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Fast Forward',
+			name: 'Fast Forward (Preview)',
 			style: {
 				style: 'text',
 				text: 'FF\\nPVW',
 				size: '14',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -453,13 +453,13 @@ export function getPresetDefinitions() {
 		'preview-step-back': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Step Back PVW',
+			name: 'Step Back (Preview)',
 			style: {
 				style: 'text',
 				text: 'Step\\nBack\\nPVW',
 				size: '14',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
@@ -475,19 +475,107 @@ export function getPresetDefinitions() {
 		'preview-step-fwd': {
 			category: 'Preview',
 			type: 'button',
-			name: 'Step FWD PVW',
+			name: 'Step FWD (Preview)',
 			style: {
 				style: 'text',
 				text: 'Step\\nFWD\\nPVW',
 				size: '14',
 				color: WHITE,
-				WHbgcolor: BLACK,
+				bgcolor: BLACK,
 			},
 			steps: [
 				{
 					down: [
 						{
 							actionId: 'pvwStepFwd',
+						},
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		// 'preview-goto-in': {
+		// 	category: 'Preview',
+		// 	type: 'button',
+		// 	name: 'Goto In (PVW)',
+		// 	style: {
+		// 		style: 'text',
+		// 		text: 'Goto\\nIn\\nPVW',
+		// 		size: '14',
+		// 		color: WHITE,
+		// 		bgcolor: BLACK,
+		// 	},
+		// 	steps: [
+		// 		{
+		// 			down: [
+		// 				{
+		// 					actionId: 'pvwGotoIn',
+		// 				},
+		// 			],
+		// 		},
+		// 	],
+		// 	feedbacks: [],
+		// },
+		// 'preview-goto-out': {
+		// 	category: 'Preview',
+		// 	type: 'button',
+		// 	name: 'Goto Out (PVW)',
+		// 	style: {
+		// 		style: 'text',
+		// 		text: 'Goto\\nOut\\nPVW',
+		// 		size: '14',
+		// 		color: WHITE,
+		// 		bgcolor: BLACK,
+		// 	},
+		// 	steps: [
+		// 		{
+		// 			down: [
+		// 				{
+		// 					actionId: 'pvwGotoOut',
+		// 				},
+		// 			],
+		// 		},
+		// 	],
+		// 	feedbacks: [],
+		// },
+		'preview-mark-in': {
+			category: 'Preview',
+			type: 'button',
+			name: 'Mark In (Preview)',
+			style: {
+				style: 'text',
+				text: 'Mark\\nIn\\nPVW',
+				size: '14',
+				color: WHITE,
+				bgcolor: BLACK,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'markIn',
+						},
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'preview-mark-out': {
+			category: 'Preview',
+			type: 'button',
+			name: 'Mark Out (Preview)',
+			style: {
+				style: 'text',
+				text: 'Mark\\nOut\\nPVW',
+				size: '14',
+				color: WHITE,
+				bgcolor: BLACK,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'markOut',
 						},
 					],
 				},

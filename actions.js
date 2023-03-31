@@ -1,175 +1,221 @@
 export function getActionDefinitions(self) {
 	return {
 		take: {
-			name: 'Take',
+			name: 'Take clip to Program',
 			options: [],
 			callback: async () => {
 				self.send('TA')
 			},
 		},
 		play: {
-			name: 'Play from current location',
+			name: 'Play from current location (Program)',
 			options: [],
 			callback: async () => {
 				self.send('PL')
 			},
 		},
 		pause: {
-			name: 'Pause Resume',
+			name: 'Pause/Resume (Program)',
 			options: [],
 			callback: async () => {
 				self.send('OP')
 			},
 		},
+		pausePgm: {
+			name: 'Pause playback (Program)',
+			options: [],
+			callback: async () => {
+				self.send('PA')
+			},
+		},
+		resumePgm: {
+			name: 'Resume playback from current location (Program)',
+			options: [],
+			callback: async () => {
+				self.send('PL')
+			},
+		},
 		kill: {
-			name: 'Kill',
+			name: 'Stop Program playback (Kill)',
 			options: [],
 			callback: async () => {
 				self.send('KL')
 			},
 		},
 		link: {
-			name: 'Link temp',
+			name: 'Link Temp (Toggle)',
 			options: [],
 			callback: async () => {
 				self.send('IT')
 			},
 		},
 		freeze: {
-			name: 'Freeze temp',
+			name: 'Freeze Temp (Toggle)',
 			options: [],
 			callback: async () => {
 				self.send('FT')
 			},
 		},
 		loop: {
-			name: 'Loop temp',
+			name: 'Loop Temp (Toggle)',
 			options: [],
 			callback: async () => {
 				self.send('LT')
 			},
 		},
+		loopTempEnable: {
+			name: 'Loop Temp (Enable)',
+			options: [],
+			callback: async () => {
+				self.send('SL')
+			},
+		},
+		loopTempDisable: {
+			name: 'Loop Temp (Disable)',
+			options: [],
+			callback: async () => {
+				self.send('EL')
+			},
+		},
 		previous: {
-			name: 'Previous Clip',
+			name: 'Previous Clip (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('PR')
 			},
 		},
 		next: {
-			name: 'Next Clip',
+			name: 'Next Clip (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('NX')
 			},
 		},
 		last10: {
-			name: 'Goto 10',
+			name: 'Goto last 10 seconds',
 			options: [],
 			callback: async () => {
 				self.send('10')
 			},
 		},
 		last20: {
-			name: 'Goto 20',
+			name: 'Goto last 20 seconds',
 			options: [],
 			callback: async () => {
 				self.send('20')
 			},
 		},
 		last30: {
-			name: 'Goto 30',
+			name: 'Goto last 30 seconds',
 			options: [],
 			callback: async () => {
 				self.send('30')
 			},
 		},
 		pgmFR: {
-			name: 'Fast Reverse Program',
+			name: 'Fast Reverse (Program)',
 			options: [],
 			callback: async () => {
 				self.send('OR')
 			},
 		},
 		pgmFF: {
-			name: 'Fast Forward Program',
+			name: 'Fast Forward (Program)',
 			options: [],
 			callback: async () => {
 				self.send('OF')
 			},
 		},
+		pgmStepBack: {
+			name: 'Step Backward (Program)',
+			options: [],
+			callback: async () => {
+				self.send('O-')
+			},
+		},
+		pgmStepFwd: {
+			name: 'Step Forward (Program)',
+			options: [],
+			callback: async () => {
+				self.send('O+')
+			},
+		},
 		pgmGotoIn: {
-			name: 'Goto In Program',
+			// has no effect??
+			name: 'Goto In (Program)',
 			options: [],
 			callback: async () => {
 				self.send('OI')
 			},
 		},
 		pgmGotoOut: {
-			name: 'Goto Out Program',
+			// has no effect??
+			name: 'Goto Out (Program)',
 			options: [],
 			callback: async () => {
 				self.send('OO')
 			},
 		},
 		markIn: {
-			name: 'Mark In PVW',
+			name: 'Mark In (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('ES')
 			},
 		},
 		markOut: {
-			name: 'Mark Out PVW',
+			name: 'Mark Out (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('EE')
 			},
 		},
 		pvwGotoIn: {
-			name: 'Goto In PVW',
+			// has no effect??
+			name: 'Goto In (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('EI')
 			},
 		},
 		pvwGotoOut: {
-			name: 'Goto Out PVW',
+			// has no effect??
+			name: 'Goto Out (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('EO')
 			},
 		},
 		pvwPause: {
-			name: 'Play/Pause PVW',
+			name: 'Play/Pause (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('EP')
 			},
 		},
 		pvwFR: {
-			name: 'Fast Rewind PVW',
+			name: 'Fast Reverse (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('ER')
 			},
 		},
 		pvwFF: {
-			name: 'Fast Forward PVW',
+			name: 'Fast Forward (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('EF')
 			},
 		},
 		pvwStepRev: {
-			name: 'Step Backward PVW',
+			name: 'Step Backward (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('E-')
 			},
 		},
 		pvwStepFwd: {
-			name: 'Step Forward PVW',
+			name: 'Step Forward (Preview)',
 			options: [],
 			callback: async () => {
 				self.send('E+')
@@ -189,7 +235,7 @@ export function getActionDefinitions(self) {
 			},
 		},
 		loadAndTakeClip: {
-			name: 'Load clip (id) and Take',
+			name: 'Load clip (id) and Take to Program',
 			options: [
 				{
 					type: 'number',
@@ -199,6 +245,117 @@ export function getActionDefinitions(self) {
 			],
 			callback: async (event) => {
 				self.send('GT' + parseInt(event.options.clip, 10))
+			},
+		},
+		clearPreviewClip: {
+			name: 'Clear Preview clip',
+			options: [],
+			callback: async () => {
+				self.send('CL')
+			},
+		},
+		decreaseFadeOut: {
+			name: 'Decrease End All fade out duration',
+			options: [],
+			callback: async () => {
+				self.send('K-')
+			},
+		},
+		increaseFadeOut: {
+			name: 'Increase End All fade out duration',
+			options: [],
+			callback: async () => {
+				self.send('K+')
+			},
+		},
+		decreaseLinkTempDuration: {
+			name: 'Decrease Link Temp duration',
+			options: [],
+			callback: async () => {
+				self.send('I-')
+			},
+		},
+		increaseLinkTempDuration: {
+			name: 'Increase Link Temp duration',
+			options: [],
+			callback: async () => {
+				self.send('I+')
+			},
+		},
+		decreaseLoopTempDuration: {
+			name: 'Decrease Loop Temp duration',
+			options: [],
+			callback: async () => {
+				self.send('L-')
+			},
+		},
+		increaseLoopTempDuration: {
+			name: 'Increase Loop Temp duration',
+			options: [],
+			callback: async () => {
+				self.send('L+')
+			},
+		},
+		decreaseFadeOnTake: {
+			name: 'Decrease Fade On Take duration',
+			options: [],
+			callback: async () => {
+				self.send('F-')
+			},
+		},
+		increaseFadeOnTake: {
+			name: 'Increase Fade On Take duration',
+			options: [],
+			callback: async () => {
+				self.send('F+')
+			},
+		},
+		decreaseTakeDuration: {
+			name: 'Decrease Take duration',
+			options: [],
+			callback: async () => {
+				self.send('T-')
+			},
+		},
+		increaseTakeDuration: {
+			name: 'Increase Take duration',
+			options: [],
+			callback: async () => {
+				self.send('T+')
+			},
+		},
+		// Need clarification on the ID expected here
+		// selectClipForPreview: {
+		// 	name: 'Select Clip by ID for Preview',
+		// 	options: [
+		// 		{
+		// 			type: 'number',
+		// 			label: 'clip ID',
+		// 			id: 'clip',
+		// 		},
+		// 	],
+		// 	callback: async (event) => {
+		// 		self.send('SI' + parseInt(event.options.clip, 10))
+		// 	},
+		// },
+		// takeClipById: {
+		// 	name: 'Take Clip by ID',
+		// 	options: [
+		// 		{
+		// 			type: 'number',
+		// 			label: 'Clip ID',
+		// 			id: 'clip',
+		// 		},
+		// 	],
+		// 	callback: async (event) => {
+		// 		self.send('TI' + parseInt(event.options.clip, 10))
+		// 	},
+		// },
+		saveShow: {
+			name: 'Save Show file',
+			options: [],
+			callback: async () => {
+				self.send('SA')
 			},
 		},
 	}

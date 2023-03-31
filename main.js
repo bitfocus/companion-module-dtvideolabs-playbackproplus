@@ -111,7 +111,7 @@ class PBPInstance extends InstanceBase {
 	}
 
 	send(data) {
-		console.log('I should be sending:', data, this.config.prot)
+		// console.log('>>>>>>>>>>>>>', data, '<<<<<<<<<<<<<')
 		if (this.config.prot == 'tcp') {
 			if (this.socket !== undefined && this.socket.isConnected) {
 				this.socket.send(data)
