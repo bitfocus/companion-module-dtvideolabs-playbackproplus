@@ -1,3 +1,5 @@
+import { combineRgb } from "@companion-module/base"
+
 // import { combineRgb } from '@companion-module/base'
 const BLACK = 0
 const WHITE = 16777215
@@ -16,11 +18,26 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 200
+			},
 			steps: [
 				{
 					down: [
 						{
 							actionId: 'take',
+						},
+						{
+							actionId: 'programCurrentNumber',
+							delay: 200
+						},
+						{
+							actionId: 'programCurrentName',
+							delay: 50
+						},
+						{
+							actionId: 'programTRT',
+							delay: 200
 						},
 					],
 				},
@@ -39,11 +56,26 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 1000
+			},
 			steps: [
 				{
 					down: [
 						{
 							actionId: 'kill',
+						},
+						{
+							actionId: 'clearProgramCurrentNumber',
+							delay: 1000
+						},
+						{
+							actionId: 'clearProgramCurrentName',
+							delay: 50
+						},
+						{
+							actionId: 'stopTRTPolling',
+							delay: 200
 						},
 					],
 				},
@@ -350,15 +382,28 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 200
+			},
 			steps: [
 				{
 					down: [
 						{
 							actionId: 'previous',
+							
 						},
-					],
+						{
+							actionId: 'previewCurrentNumber',
+							delay: 200
+						},
+						{
+							actionId: 'previewCurrentName',
+							delay: 50
+						}
+					]
 				},
 			],
+			
 			feedbacks: [],
 		},
 		'preview-next': {
@@ -373,13 +418,24 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 200
+			},
 			steps: [
 				{
 					down: [
 						{
 							actionId: 'next',
 						},
-					],
+						{
+							actionId: 'previewCurrentNumber',
+							delay: 200
+						},
+						{
+							actionId: 'previewCurrentName',
+							delay: 50
+						}
+					]
 				},
 			],
 			feedbacks: [],
@@ -577,6 +633,101 @@ export function getPresetDefinitions() {
 						{
 							actionId: 'markOut',
 						},
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'preview-name': {
+			category: 'Information',
+			type: 'button',
+			name: 'Clip Name (Preview)',
+			style: {
+				style: 'text',
+				text: '$(pbp:previewCurrentName)',
+				size: '14',
+				color: WHITE,
+				bgcolor: combineRgb(58, 235, 52),
+			},
+			steps: [
+				{
+					down: [
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'preview-number': {
+			category: 'Information',
+			type: 'button',
+			name: 'Clip Number (Preview)',
+			style: {
+				style: 'text',
+				text: '$(pbp:previewCurrentNumber)',
+				size: '14',
+				color: WHITE,
+				bgcolor: combineRgb(58, 235, 52),
+			},
+			steps: [
+				{
+					down: [
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'program-name': {
+			category: 'Information',
+			type: 'button',
+			name: 'Clip Number (Program)',
+			style: {
+				style: 'text',
+				text: '$(pbp:programCurrentName)',
+				size: '14',
+				color: WHITE,
+				bgcolor: combineRgb(235, 55, 52),
+			},
+			steps: [
+				{
+					down: [
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'program-number': {
+			category: 'Information',
+			type: 'button',
+			name: 'Clip Number (Program)',
+			style: {
+				style: 'text',
+				text: '$(pbp:programCurrentNumber)',
+				size: '14',
+				color: WHITE,
+				bgcolor: combineRgb(235, 55, 52),
+			},
+			steps: [
+				{
+					down: [
+					],
+				},
+			],
+			feedbacks: [],
+		},
+		'program-TRT': {
+			category: 'Information',
+			type: 'button',
+			name: 'Clip Number (Program)',
+			style: {
+				style: 'text',
+				text: '$(pbp:programTRT)',
+				size: '14',
+				color: WHITE,
+				bgcolor: combineRgb(235, 55, 52),
+			},
+			steps: [
+				{
+					down: [
 					],
 				},
 			],

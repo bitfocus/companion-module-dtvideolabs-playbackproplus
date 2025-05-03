@@ -2,10 +2,17 @@ import { InstanceBase, InstanceStatus, runEntrypoint, TCPHelper, UDPHelper } fro
 import { ConfigFields } from './config.js'
 import { getActionDefinitions } from './actions.js'
 import { getPresetDefinitions } from './presets.js'
+import { getVariablesDefinitions } from './variables.js'
 
 class PBPInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
+		//Alejandro's Mod
+		this.commandQueue = [];
+		this.waitingForReply = false;
+		this.commandTimeout = null
+		this.commandTimeoutDuration = 1000
+		this.trtInterval = null
 	}
 
 	async init(config) {
@@ -13,6 +20,14 @@ class PBPInstance extends InstanceBase {
 		this.updateStatus(InstanceStatus.Disconnected)
 		this.setActionDefinitions(getActionDefinitions(this))
 		this.setPresetDefinitions(getPresetDefinitions(this))
+		this.setVariableDefinitions(getVariablesDefinitions(this))
+		this.setVariableValues({
+			previewCurrentName: "preview name",
+			previewCurrentNumber: "preview number",
+			programCurrentName: "program name",
+			programCurrentNumber: "program number",
+			programTRT: "program trt",
+		})
 		await this.configUpdated(config)
 	}
 
@@ -101,6 +116,29 @@ class PBPInstance extends InstanceBase {
 				console.log('TCP status_change', status, message)
 			})
 
+			//Alejandro's Mod
+			this.socket.on('data', (data) => {
+				const msg = data.toString().trim()
+				this.log('debug', `Received: ${msg}`)
+			
+				clearTimeout(this.commandTimeout)
+			
+				const current = this.commandQueue.shift()
+				this.log('debug', `Dequeued: ${JSON.stringify(current)}`)
+			
+				try {
+					if (typeof current?.callback === 'function') {
+						current.callback(msg)
+					}
+				} catch (err) {
+					this.log('error', `Callback error: ${err.message}`)
+				}
+			
+				this.waitingForReply = false
+				this.processNextCommand()
+			})
+			
+
 			this.socket.on('error', (err) => {
 				this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
 				this.log('error', 'Network error: ' + err.message)
@@ -110,22 +148,112 @@ class PBPInstance extends InstanceBase {
 		}
 	}
 
-	send(data) {
-		// console.log('>>>>>>>>>>>>>', data, '<<<<<<<<<<<<<')
+	send(input) {
+		// console.log('>>>>>>>>>>>>>', command, '<<<<<<<<<<<<<')
+		//Alejandro's Mod
+		let command, callback = null, expectsResponse = false
+
+		if (typeof input === 'string') {
+			command = input
+		} else if (typeof input === 'object' && input.command) {
+			({ command, callback = null, expectsResponse = false } = input)
+		} else {
+			this.log('error', 'Invalid command input for send()')
+			return
+		}
+
 		if (this.config.prot == 'tcp') {
 			if (this.socket !== undefined && this.socket.isConnected) {
-				this.socket.send(data)
+				//Alejandro's Mod
+				this.commandQueue.push({ command, callback, expectsResponse })
+				this.log('debug', `queued: ${command}, expectsResponse: ${expectsResponse}`)
+				this.processNextCommand()
 			} else {
 				this.log('error', 'TCP Socket not connected')
 			}
 		} else if (this.config.prot == 'udp') {
 			if (this.udp !== undefined) {
-				this.udp.send(data)
+				this.udp.send(command)
 			} else {
 				this.log('error', 'UDP Socket not connected')
 			}
 		}
 	}
+
+	// Alejandro's Mod
+	processNextCommand() {
+		this.log('debug', `waiting for reply: ${this.waitingForReply}, commandQueue.length: ${this.commandQueue.length}`)
+		if (this.waitingForReply || this.commandQueue.length === 0) return
+
+		const { command, callback, expectsResponse } = this.commandQueue[0]
+
+		if (this.config.prot === 'tcp' && this.socket?.isConnected) {
+			this.socket.send(command + '\r')
+			this.log('debug', `sent: ${command}, expectsResponse: ${expectsResponse}`)
+
+			if (expectsResponse) {
+				this.waitingForReply = true
+
+				clearTimeout(this.commandTimeout)
+				this.commandTimeout = setTimeout(() => {
+					this.log('warn', `Timeout: no response for "${command}"`)
+					this.waitingForReply = false
+					this.commandQueue.shift()
+					this.processNextCommand()
+				}, this.commandTimeoutDuration)
+			} else {
+				this.commandQueue.shift()
+				this.waitingForReply = false
+				setImmediate(() => this.processNextCommand())
+			}
+		} else {
+			this.log('error', 'Socket not ready')
+			this.commandQueue.shift()
+			this.waitingForReply = false
+			setImmediate(() => this.processNextCommand())
+		}
+	}
+
+	startPollingTRT() {
+		if (this.pollTRTInterval) return
+	
+		this.pollTRTInterval = setInterval(() => {
+			this.send({
+				command: 'TR',
+				expectsResponse: true,
+				callback: (msg) => {
+					this.setVariableValues({ programTRT: msg })
+	
+					if (msg === '00:00:00:00' || msg === '-00:00:00:00' || msg === 'N/A') {
+						clearInterval(this.pollTRTInterval)
+						this.pollTRTInterval = null
+						this.setVariableValues({
+							programTRT: "program trt",
+							programCurrentName: "program name",
+							programCurrentNumber: "program number",
+						})
+						this.log('info', 'Polling stopped: TRT reached zero.')
+					}
+				}
+			})
+		}, 500)
+	}
+	
+	stopPollingTRT() {
+		if (this.pollTRTInterval) {
+			clearInterval(this.pollTRTInterval)
+			this.pollTRTInterval = null
+			this.setVariableValues({
+				programTRT: "program trt",
+				programCurrentName: "program name",
+				programCurrentNumber: "program number",
+			})
+			this.log('info', 'Polling manually stopped.')
+		}
+	}
+	
+	
+	
 }
 
 runEntrypoint(PBPInstance, [])
