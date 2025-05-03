@@ -358,5 +358,71 @@ export function getActionDefinitions(self) {
 				self.send('SA')
 			},
 		},
+		//Alejandro's Mod
+		previewCurrentName: {
+			name: 'Preview Current Name',
+			options: [],
+			callback: async () => {
+				self.send({
+					command: 'VN',
+					expectsResponse: true,
+					callback: (msg) => {
+						self.setVariableValues({ previewCurrentName: msg })
+					}
+				})
+			}
+		},
+		previewCurrentNumber: {
+			name: 'Preview Current Number',
+			options: [],
+			callback: async () => {
+				self.send({
+					command: 'VU',
+					expectsResponse: true,
+					callback: (msg) => {
+						self.setVariableValues({ previewCurrentNumber: msg })
+					}
+				})
+			}
+		},
+		programCurrentName: {
+			name: 'Program Current Name',
+			options: [],
+			callback: async () => {
+				self.send({
+					command: 'GN',
+					expectsResponse: true,
+					callback: (msg) => {
+						self.setVariableValues({ programCurrentName: msg })
+					}
+				})
+			}
+		},
+		programCurrentNumber: {
+			name: 'Program Current Number',
+			options: [],
+			callback: async () => {
+				self.send({
+					command: 'GU',
+					expectsResponse: true,
+					callback: (msg) => {
+						self.setVariableValues({ programCurrentNumber: msg })
+					}
+				})
+			}
+		},
+		programTRT: {
+			name: 'Program TRT',
+			options: [],
+			callback: async () => {
+				self.send({
+					command: 'TR',
+					expectsResponse: true,
+					callback: (msg) => {
+						self.setVariableValues({ programTRT: msg })
+					}
+				})
+			}
+		},
 	}
 }
