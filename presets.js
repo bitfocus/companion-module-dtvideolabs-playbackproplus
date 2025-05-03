@@ -18,6 +18,9 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 200
+			},
 			steps: [
 				{
 					down: [
@@ -27,6 +30,10 @@ export function getPresetDefinitions() {
 						{
 							actionId: 'programCurrentNumber',
 							delay: 200
+						},
+						{
+							actionId: 'programCurrentName',
+							delay: 50
 						},
 						{
 							actionId: 'programTRT',
@@ -49,6 +56,9 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 1000
+			},
 			steps: [
 				{
 					down: [
@@ -56,11 +66,15 @@ export function getPresetDefinitions() {
 							actionId: 'kill',
 						},
 						{
-							actionId: 'programCurrentNumber',
-							delay: 200
+							actionId: 'clearProgramCurrentNumber',
+							delay: 1000
 						},
 						{
-							actionId: 'programTRT',
+							actionId: 'clearProgramCurrentName',
+							delay: 50
+						},
+						{
+							actionId: 'stopTRTPolling',
 							delay: 200
 						},
 					],
@@ -384,7 +398,7 @@ export function getPresetDefinitions() {
 						},
 						{
 							actionId: 'previewCurrentName',
-							delay: 200
+							delay: 50
 						}
 					]
 				},
@@ -404,6 +418,9 @@ export function getPresetDefinitions() {
 				color: WHITE,
 				bgcolor: BLACK,
 			},
+			options: {
+				relativeDelay: 200
+			},
 			steps: [
 				{
 					down: [
@@ -416,7 +433,7 @@ export function getPresetDefinitions() {
 						},
 						{
 							actionId: 'previewCurrentName',
-							delay: 200
+							delay: 50
 						}
 					]
 				},

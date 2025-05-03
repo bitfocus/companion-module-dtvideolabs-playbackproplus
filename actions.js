@@ -411,17 +411,32 @@ export function getActionDefinitions(self) {
 				})
 			}
 		},
-		programTRT: {
-			name: 'Program TRT',
+		clearProgramCurrentName: {
+			name: 'Clear Program Current Name',
 			options: [],
 			callback: async () => {
-				self.send({
-					command: 'TR',
-					expectsResponse: true,
-					callback: (msg) => {
-						self.setVariableValues({ programTRT: msg })
-					}
-				})
+				self.setVariableValues({ programCurrentName: "Program Name" })
+			}
+		},
+		clearProgramCurrentNumber: {
+			name: 'Clear Program Current Number',
+			options: [],
+			callback: async () => {
+				self.setVariableValues({ programCurrentNumber: "Program Number" })
+			}
+		},
+		programTRT: {
+			name: 'Poll TRT until zero',
+			options: [],
+			callback: async () => {
+				self.startPollingTRT()
+			}
+		},
+		stopTRTPolling: {
+			name: 'Stop TRT Polling',
+			options: [],
+			callback: async () => {
+				self.stopPollingTRT()
 			}
 		},
 	}

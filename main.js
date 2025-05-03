@@ -12,6 +12,7 @@ class PBPInstance extends InstanceBase {
 		this.waitingForReply = false;
 		this.commandTimeout = null
 		this.commandTimeoutDuration = 1000
+		this.trtInterval = null
 	}
 
 	async init(config) {
@@ -180,7 +181,6 @@ class PBPInstance extends InstanceBase {
 	}
 
 	// Alejandro's Mod
-	// processNextCommand method
 	processNextCommand() {
 		this.log('debug', `waiting for reply: ${this.waitingForReply}, commandQueue.length: ${this.commandQueue.length}`)
 		if (this.waitingForReply || this.commandQueue.length === 0) return
@@ -214,6 +214,43 @@ class PBPInstance extends InstanceBase {
 		}
 	}
 
+	startPollingTRT() {
+		if (this.pollTRTInterval) return
+	
+		this.pollTRTInterval = setInterval(() => {
+			this.send({
+				command: 'TR',
+				expectsResponse: true,
+				callback: (msg) => {
+					this.setVariableValues({ programTRT: msg })
+	
+					if (msg === '00:00:00:00' || msg === '-00:00:00:00' || msg === 'N/A') {
+						clearInterval(this.pollTRTInterval)
+						this.pollTRTInterval = null
+						this.setVariableValues({
+							programTRT: "program trt",
+							programCurrentName: "program name",
+							programCurrentNumber: "program number",
+						})
+						this.log('info', 'Polling stopped: TRT reached zero.')
+					}
+				}
+			})
+		}, 500)
+	}
+	
+	stopPollingTRT() {
+		if (this.pollTRTInterval) {
+			clearInterval(this.pollTRTInterval)
+			this.pollTRTInterval = null
+			this.setVariableValues({
+				programTRT: "program trt",
+				programCurrentName: "program name",
+				programCurrentNumber: "program number",
+			})
+			this.log('info', 'Polling manually stopped.')
+		}
+	}
 	
 	
 	
