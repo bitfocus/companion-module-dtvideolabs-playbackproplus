@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
-		"test": "node --test test/*.cjs",
+		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint:raw": "eslint",
 		"lint": "yarn lint:raw .",
 		"build": "companion-module-build"
